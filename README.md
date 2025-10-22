@@ -27,21 +27,39 @@ pip install -r requirements.txt
 ## Quick Start
 
 ```bash
-# Download all models for WAN 2.2 workflow
-python download_models.py workflows/wan22.json
+# Download all models for WAN 2.2 I2V workflow (auto-detects ComfyUI location)
+python download_models.py workflows/wan22_i2v.json
 
 # Download only required models
-python download_models.py workflows/wan22.json --required-only
+python download_models.py workflows/wan22_i2v.json --required-only
 
-# Specify ComfyUI installation path
-python download_models.py workflows/wan22.json --comfyui-path /path/to/ComfyUI
+# Specify ComfyUI installation path manually (if auto-detection fails)
+python download_models.py workflows/wan22_i2v.json --comfyui-path /path/to/ComfyUI
 
 # Use sequential downloads (slower but more stable)
-python download_models.py workflows/wan22.json --workers 1
+python download_models.py workflows/wan22_i2v.json --workers 1
 
 # Skip file size verification
-python download_models.py workflows/wan22.json --no-verify
+python download_models.py workflows/wan22_i2v.json --no-verify
 ```
+
+### ComfyUI Auto-Detection
+
+The script automatically searches for your ComfyUI installation in these locations:
+
+1. `/app/ComfyUI` (Docker/RunPod standard location)
+2. `~/ComfyUI` (home directory)
+3. `./ComfyUI` (current directory)
+4. `../ComfyUI` (parent directory)
+5. `/workspace/ComfyUI` (RunPod network volume)
+6. Any folder in current directory with "comfyui" in the name (case-insensitive)
+
+**Validation checks:**
+- ✅ `main.py` exists (ComfyUI entry point)
+- ✅ `comfy/` directory exists (core code)
+- ✅ `models/` directory exists or can be created
+
+If auto-detection fails, specify the path manually with `--comfyui-path`.
 
 ## Usage
 
@@ -55,7 +73,7 @@ python download_models.py <workflow_json> [options]
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--comfyui-path PATH` | Path to ComfyUI installation | `/app/ComfyUI` |
+| `--comfyui-path PATH` | Path to ComfyUI installation | `auto-detect` |
 | `--required-only` | Only download required models | `False` |
 | `--workers N` | Number of parallel downloads | `3` |
 | `--no-verify` | Skip file size verification | `False` |

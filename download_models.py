@@ -23,6 +23,82 @@ import requests
 from tqdm import tqdm
 
 
+def find_comfyui_installation() -> Optional[Path]:
+    """
+    Auto-detect ComfyUI installation by searching common locations.
+
+    Searches in order:
+    1. /app/ComfyUI (Docker/RunPod standard)
+    2. ~/ComfyUI
+    3. Current directory and parent directories
+    4. /workspace/ComfyUI (RunPod volume)
+
+    Returns:
+        Path to ComfyUI installation or None if not found
+    """
+    search_paths = [
+        Path('/app/ComfyUI'),
+        Path.home() / 'ComfyUI',
+        Path.cwd() / 'ComfyUI',
+        Path.cwd().parent / 'ComfyUI',
+        Path('/workspace/ComfyUI'),
+    ]
+
+    # Also search current directory for any folder with "comfyui" in name (case-insensitive)
+    try:
+        for item in Path.cwd().iterdir():
+            if item.is_dir() and 'comfyui' in item.name.lower():
+                search_paths.append(item)
+    except Exception:
+        pass
+
+    for path in search_paths:
+        if validate_comfyui_installation(path):
+            return path
+
+    return None
+
+
+def validate_comfyui_installation(path: Path) -> bool:
+    """
+    Validate that a path contains a valid ComfyUI installation.
+
+    Checks for characteristic files/folders:
+    - main.py (ComfyUI entry point)
+    - comfy/ directory (core ComfyUI code)
+    - models/ directory or ability to create it
+
+    Args:
+        path: Path to check
+
+    Returns:
+        True if valid ComfyUI installation, False otherwise
+    """
+    if not path.exists() or not path.is_dir():
+        return False
+
+    # Check for main.py (ComfyUI entry point)
+    main_py = path / 'main.py'
+    if not main_py.exists():
+        return False
+
+    # Check for comfy directory (core ComfyUI code)
+    comfy_dir = path / 'comfy'
+    if not comfy_dir.exists() or not comfy_dir.is_dir():
+        return False
+
+    # Check if models directory exists or can be created
+    models_dir = path / 'models'
+    if not models_dir.exists():
+        # Try to create it to verify write permissions
+        try:
+            models_dir.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            return False
+
+    return True
+
+
 class ModelDownloader:
     def __init__(self, comfyui_path: str, max_workers: int = 3, verify_size: bool = True):
         """
@@ -209,8 +285,8 @@ def main():
 
     parser.add_argument(
         '--comfyui-path',
-        default='/app/ComfyUI',
-        help='Path to ComfyUI installation (default: /app/ComfyUI)'
+        default=None,
+        help='Path to ComfyUI installation (default: auto-detect)'
     )
 
     parser.add_argument(
@@ -235,8 +311,38 @@ def main():
     args = parser.parse_args()
 
     try:
+        # Auto-detect ComfyUI installation if not specified
+        comfyui_path = args.comfyui_path
+        if comfyui_path is None:
+            print("🔍 Auto-detecting ComfyUI installation...")
+            detected_path = find_comfyui_installation()
+            if detected_path is None:
+                print("\n❌ Error: Could not find ComfyUI installation!", file=sys.stderr)
+                print("\nSearched locations:", file=sys.stderr)
+                print("  - /app/ComfyUI (Docker/RunPod)", file=sys.stderr)
+                print("  - ~/ComfyUI (home directory)", file=sys.stderr)
+                print("  - ./ComfyUI (current directory)", file=sys.stderr)
+                print("  - /workspace/ComfyUI (RunPod volume)", file=sys.stderr)
+                print("  - Any folder with 'comfyui' in name", file=sys.stderr)
+                print("\nPlease either:", file=sys.stderr)
+                print("  1. Clone ComfyUI: git clone https://github.com/comfyanonymous/ComfyUI.git", file=sys.stderr)
+                print("  2. Specify path manually: --comfyui-path /path/to/ComfyUI", file=sys.stderr)
+                sys.exit(1)
+            comfyui_path = str(detected_path)
+            print(f"✓ Found ComfyUI at: {comfyui_path}\n")
+        else:
+            # Validate user-provided path
+            if not validate_comfyui_installation(Path(comfyui_path)):
+                print(f"\n❌ Error: Invalid ComfyUI installation at {comfyui_path}", file=sys.stderr)
+                print("\nA valid ComfyUI installation must contain:", file=sys.stderr)
+                print("  - main.py (ComfyUI entry point)", file=sys.stderr)
+                print("  - comfy/ directory (core code)", file=sys.stderr)
+                print("  - models/ directory (or ability to create it)", file=sys.stderr)
+                sys.exit(1)
+            print(f"✓ Using ComfyUI at: {comfyui_path}\n")
+
         downloader = ModelDownloader(
-            comfyui_path=args.comfyui_path,
+            comfyui_path=comfyui_path,
             max_workers=args.workers,
             verify_size=not args.no_verify
         )
@@ -247,7 +353,7 @@ def main():
         )
 
     except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
+        print(f"\n❌ Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 

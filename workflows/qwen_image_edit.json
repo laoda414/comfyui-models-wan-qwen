@@ -1,0 +1,42 @@
+{
+  "workflow_name": "Qwen Image Edit",
+  "description": "Models needed for Qwen-based image editing workflow",
+  "models": {
+    "checkpoints": [
+      {
+        "name": "qwen_vl_base.safetensors",
+        "url": "https://huggingface.co/Qwen/Qwen-VL/resolve/main/model.safetensors",
+        "size_gb": 9.6,
+        "required": true,
+        "destination": "models/checkpoints/"
+      }
+    ],
+    "clip": [
+      {
+        "name": "clip_vision_g.safetensors",
+        "url": "https://huggingface.co/openai/clip-vit-large-patch14/resolve/main/pytorch_model.bin",
+        "size_gb": 1.7,
+        "required": true,
+        "destination": "models/clip/"
+      }
+    ],
+    "controlnet": [
+      {
+        "name": "control_sd15_canny.safetensors",
+        "url": "https://huggingface.co/lllyasviel/ControlNet/resolve/main/models/control_sd15_canny.pth",
+        "size_gb": 1.4,
+        "required": false,
+        "destination": "models/controlnet/"
+      }
+    ],
+    "upscale_models": [
+      {
+        "name": "RealESRGAN_x4plus.pth",
+        "url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
+        "size_gb": 0.06,
+        "required": false,
+        "destination": "models/upscale_models/"
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "config_name": "96GB GPU Configuration",
+  "description": "High-end configuration for GPUs with 96GB VRAM (e.g., NVIDIA RTX Pro 6000 Ada)",
+  "max_vram_gb": 96,
+  "recommended_workflows": [
+    "wan22",
+    "qwen_image_edit",
+    "flux_dev",
+    "sdxl_turbo"
+  ],
+  "model_preferences": {
+    "checkpoint_precision": "fp32",
+    "use_lowvram_mode": false,
+    "max_checkpoint_size_gb": 50,
+    "enable_model_offloading": false,
+    "allow_multiple_models_loaded": true
+  },
+  "notes": [
+    "Can handle multiple large models simultaneously",
+    "No need for memory optimizations in most cases",
+    "Ideal for fp32 precision and large batch sizes",
+    "Can keep multiple checkpoints loaded for faster switching"
+  ]
+}

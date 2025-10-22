@@ -1,0 +1,20 @@
+{
+  "config_name": "24GB GPU Configuration",
+  "description": "Optimized model selection for GPUs with 24GB VRAM (e.g., RTX 4090, RTX 3090)",
+  "max_vram_gb": 24,
+  "recommended_workflows": [
+    "wan22",
+    "qwen_image_edit"
+  ],
+  "model_preferences": {
+    "checkpoint_precision": "fp16",
+    "use_lowvram_mode": false,
+    "max_checkpoint_size_gb": 15,
+    "enable_model_offloading": false
+  },
+  "notes": [
+    "Can handle most SDXL-based workflows",
+    "May need to reduce batch size for very large models",
+    "Consider using fp16 precision for better memory efficiency"
+  ]
+}

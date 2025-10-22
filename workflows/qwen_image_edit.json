@@ -1,41 +1,62 @@
 {
   "workflow_name": "Qwen Image Edit",
-  "description": "Models needed for Qwen-based image editing workflow",
+  "description": "Models needed for Qwen Image Edit workflow. Powerful image editing with natural language instructions and multi-image editing support.",
   "models": {
-    "checkpoints": [
+    "diffusion_models": [
       {
-        "name": "qwen_vl_base.safetensors",
-        "url": "https://huggingface.co/Qwen/Qwen-VL/resolve/main/model.safetensors",
-        "size_gb": 9.6,
+        "name": "qwen_image_edit_2509_fp8_e4m3fn.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2509_fp8_e4m3fn.safetensors",
+        "size_gb": 20.4,
         "required": true,
-        "destination": "models/checkpoints/"
+        "destination": "models/diffusion_models/"
+      },
+      {
+        "name": "qwen_image_edit_fp8_e4m3fn.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_fp8_e4m3fn.safetensors",
+        "size_gb": 20.4,
+        "required": false,
+        "destination": "models/diffusion_models/"
+      },
+      {
+        "name": "qwen_image_edit_2509_bf16.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2509_bf16.safetensors",
+        "size_gb": 40.9,
+        "required": false,
+        "destination": "models/diffusion_models/"
       }
     ],
-    "clip": [
+    "text_encoders": [
       {
-        "name": "clip_vision_g.safetensors",
-        "url": "https://huggingface.co/openai/clip-vit-large-patch14/resolve/main/pytorch_model.bin",
+        "name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "size_gb": 9.38,
+        "required": true,
+        "destination": "models/text_encoders/"
+      }
+    ],
+    "vae": [
+      {
+        "name": "qwen_image_vae.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors",
+        "size_gb": 0.254,
+        "required": true,
+        "destination": "models/vae/"
+      }
+    ],
+    "loras": [
+      {
+        "name": "Qwen-Image-Edit-Lightning-4steps-V1.0.safetensors",
+        "url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Edit-Lightning-4steps-V1.0.safetensors",
         "size_gb": 1.7,
-        "required": true,
-        "destination": "models/clip/"
-      }
-    ],
-    "controlnet": [
-      {
-        "name": "control_sd15_canny.safetensors",
-        "url": "https://huggingface.co/lllyasviel/ControlNet/resolve/main/models/control_sd15_canny.pth",
-        "size_gb": 1.4,
         "required": false,
-        "destination": "models/controlnet/"
-      }
-    ],
-    "upscale_models": [
+        "destination": "models/loras/"
+      },
       {
-        "name": "RealESRGAN_x4plus.pth",
-        "url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
-        "size_gb": 0.06,
+        "name": "Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors",
+        "url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors",
+        "size_gb": 1.7,
         "required": false,
-        "destination": "models/upscale_models/"
+        "destination": "models/loras/"
       }
     ]
   }

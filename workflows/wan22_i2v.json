@@ -1,0 +1,61 @@
+{
+  "workflow_name": "WAN 2.2 I2V (Image to Video)",
+  "description": "Models needed for WAN 2.2 Image to Video generation workflow. Uses dual noise models for high-quality video synthesis.",
+  "models": {
+    "diffusion_models": [
+      {
+        "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+        "size_gb": 14.3,
+        "required": true,
+        "destination": "models/diffusion_models/"
+      },
+      {
+        "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "size_gb": 14.3,
+        "required": true,
+        "destination": "models/diffusion_models/"
+      },
+      {
+        "name": "wan2.2_i2v_high_noise_14B_fp16.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp16.safetensors",
+        "size_gb": 28.6,
+        "required": false,
+        "destination": "models/diffusion_models/"
+      },
+      {
+        "name": "wan2.2_i2v_low_noise_14B_fp16.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp16.safetensors",
+        "size_gb": 28.6,
+        "required": false,
+        "destination": "models/diffusion_models/"
+      }
+    ],
+    "text_encoders": [
+      {
+        "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "size_gb": 6.74,
+        "required": true,
+        "destination": "models/text_encoders/"
+      },
+      {
+        "name": "umt5_xxl_fp16.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors",
+        "size_gb": 11.4,
+        "required": false,
+        "destination": "models/text_encoders/"
+      }
+    ],
+    "vae": [
+      {
+        "name": "wan_2.1_vae.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+        "size_gb": 0.254,
+        "required": true,
+        "destination": "models/vae/"
+      }
+    ]
+  }
+}

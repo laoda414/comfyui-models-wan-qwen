@@ -1,0 +1,79 @@
+{
+  "workflow_name": "Qwen Image (Image Generation)",
+  "description": "Models needed for Qwen Image generation workflow. Advanced text-to-image model with native Chinese and English support.",
+  "models": {
+    "diffusion_models": [
+      {
+        "name": "qwen_image_fp8_e4m3fn.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_fp8_e4m3fn.safetensors",
+        "size_gb": 20.4,
+        "required": true,
+        "destination": "models/diffusion_models/"
+      },
+      {
+        "name": "qwen_image_bf16.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_bf16.safetensors",
+        "size_gb": 40.9,
+        "required": false,
+        "destination": "models/diffusion_models/"
+      }
+    ],
+    "text_encoders": [
+      {
+        "name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "size_gb": 9.38,
+        "required": true,
+        "destination": "models/text_encoders/"
+      },
+      {
+        "name": "qwen_2.5_vl_7b.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors",
+        "size_gb": 16.6,
+        "required": false,
+        "destination": "models/text_encoders/"
+      }
+    ],
+    "vae": [
+      {
+        "name": "qwen_image_vae.safetensors",
+        "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors",
+        "size_gb": 0.254,
+        "required": true,
+        "destination": "models/vae/"
+      }
+    ],
+    "loras": [
+      {
+        "name": "Qwen-Image-Lightning-4steps-V2.0.safetensors",
+        "url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-4steps-V2.0.safetensors",
+        "size_gb": 1.7,
+        "required": false,
+        "destination": "models/loras/"
+      },
+      {
+        "name": "Qwen-Image-Lightning-8steps-V2.0.safetensors",
+        "url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V2.0.safetensors",
+        "size_gb": 1.7,
+        "required": false,
+        "destination": "models/loras/"
+      }
+    ],
+    "controlnet": [
+      {
+        "name": "qwen_controlnet_union.safetensors",
+        "url": "https://huggingface.co/InstantX/Qwen-Image-ControlNet-Union/resolve/main/diffusion_pytorch_model.safetensors",
+        "size_gb": 3.54,
+        "required": false,
+        "destination": "models/controlnet/"
+      },
+      {
+        "name": "qwen_controlnet_inpainting.safetensors",
+        "url": "https://huggingface.co/InstantX/Qwen-Image-ControlNet-Inpainting/resolve/main/diffusion_pytorch_model.safetensors",
+        "size_gb": 4.23,
+        "required": false,
+        "destination": "models/controlnet/"
+      }
+    ]
+  }
+}
